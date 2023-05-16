@@ -13,21 +13,23 @@ public class Worker : BackgroundService
     private readonly IConfiguration _config;
     private string RabbitHostName = string.Empty;
     private string RabbitQueue = string.Empty;
-    private readonly MongoService dbService;
+    //private readonly MongoService dbService;
+    private readonly IMongoServiceFactory _mongoServiceFactory;
 
-    public Worker(ILogger<Worker> logger, IConfiguration config, MongoService service)
+    public Worker(ILogger<Worker> logger, IConfiguration config, /*MongoService service,*/ IMongoServiceFactory mongoServiceFactory)
     {
         _logger = logger;
         _config = config;
-        dbService = service;
+        //dbService = service;
         RabbitHostName = _config["rabbithostname"];
         RabbitQueue = _config["rabbitqueue"];
-
+        _mongoServiceFactory = mongoServiceFactory;
     }
 
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+
         var factory = new ConnectionFactory { HostName = RabbitHostName };
         using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
@@ -45,12 +47,14 @@ public class Worker : BackgroundService
             Bid newBid = JsonSerializer.Deserialize<Bid>(message);
             try
             {
-                await dbService.UpdateBid(newBid);
+                var mongoService = _mongoServiceFactory.CreateScoped();
+                await mongoService.UpdateBid(newBid);
                 _logger.LogInformation("updated existing item");
             }
             catch(ItemsNotFoundException)
             {
-                await dbService.CreateNewBid(newBid);
+                var mongoService = _mongoServiceFactory.CreateScoped();
+                await mongoService.CreateNewBid(newBid);
                 _logger.LogInformation("New item created");
             }
         };

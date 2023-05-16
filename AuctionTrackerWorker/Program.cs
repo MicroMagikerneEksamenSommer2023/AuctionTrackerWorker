@@ -11,7 +11,13 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
         services.AddHostedService<Worker>();
-        services.AddScoped<MongoService>();
+        services.AddScoped<MongoService>();  // Register the MongoService
+
+    services.AddSingleton<IMongoServiceFactory>(provider =>
+{
+    var scopeFactory = provider.GetRequiredService<IServiceScopeFactory>();
+    return new MongoServiceFactory(scopeFactory);
+});
 
         // Add MVC services
         services.AddMvc();

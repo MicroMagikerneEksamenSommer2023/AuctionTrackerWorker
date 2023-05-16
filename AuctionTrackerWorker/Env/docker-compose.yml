@@ -1,0 +1,38 @@
+services:
+  Rabbito:
+    image: rabbitmq:management
+    hostname: "rabbitmq-dev"
+    ports: 
+      - "15672:15672"
+      - "5672:5672"
+    networks: 
+      - network1
+  wowrker:
+    image: wowrker:latest
+    environment:
+      - connectionsstring=mongodb://root:password@mongodb:27017/?authSource=admin
+      - database=TEST
+      - collection=bids
+      - collection2=BidLogs
+      - rabbithostname=rabbitmq-dev
+      - rabbitqueue=minko
+    ports:
+          - "5001:80" 
+    networks: 
+      - network1
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27018:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: MikroDB
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+      - network1
+volumes:
+  mongodb_data_container:
+networks: 
+  network1:

@@ -3,7 +3,7 @@ using AuctionTrackerWorker.Models;
 
 namespace AuctionTrackerWorker.Services;
 
-public class MongoService
+public class MongoService : IMongoService
 {
         private readonly ILogger<MongoService> _logger;
         private readonly IMongoCollection<Bid> _bids;
