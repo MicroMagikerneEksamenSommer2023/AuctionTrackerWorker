@@ -8,7 +8,7 @@ services:
     networks: 
       - network1
   wowrker:
-    image: wowrker:latest
+    image: worker:latest
     environment:
       - connectionsstring=mongodb://root:password@mongodb:27017/?authSource=admin
       - database=TEST

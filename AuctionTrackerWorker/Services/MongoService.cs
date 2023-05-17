@@ -34,11 +34,22 @@ public class MongoService : IMongoService
 
         public async Task<Bid> GetById(string id)
         {
-            var filter = Builders<Bid>.Filter.Eq(b => b.Id, id);
+            var filter = Builders<Bid>.Filter.Eq(b => b.CatalogId, id);
             var dbData = (await _bids.FindAsync(filter)).FirstOrDefault();
               if (dbData == null)
             {
                 throw new ItemsNotFoundException($"No bid with ID {id} was found in the database.");
+            }
+            return dbData;
+        }
+
+        public async Task<List<Bid>> GetByEmail(string email)
+        {
+            var filter = Builders<Bid>.Filter.Eq(b => b.BuyerEmail, email);
+            var dbData = (await _bids.FindAsync(filter)).ToList();
+              if (dbData == null)
+            {
+                throw new ItemsNotFoundException($"No bid with email {email} was found in the database.");
             }
             return dbData;
         }
@@ -93,7 +104,29 @@ public class MongoService : IMongoService
             }
             return dbData;
         }
+
+        public async Task<List<BidLogs>> GetLogsById(string id)
+        {
+            var filter = Builders<BidLogs>.Filter.Eq(b => b.CatalogId, id);
+            var dbData = (await _logs.FindAsync(filter)).ToList();
+              if (dbData == null)
+            {
+                throw new ItemsNotFoundException($"No bid logs with catalogID {id} was found in the database.");
+            }
+            return dbData;
+        }
+
+        public async Task<List<BidLogs>> GetLogsByEmail(string email)
+        {
+            var filter = Builders<BidLogs>.Filter.Eq(b => b.BuyerEmail, email);
+            var dbData = (await _logs.FindAsync(filter)).ToList();
+              if (dbData == null)
+            {
+                throw new ItemsNotFoundException($"No bid logs with buyer-email: {email} was found in the database.");
+            }
+            return dbData;
+        }
         
-//magler logs
+
 
 }
