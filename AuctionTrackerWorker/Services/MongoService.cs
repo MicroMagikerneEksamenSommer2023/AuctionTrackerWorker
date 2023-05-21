@@ -84,7 +84,7 @@ public class MongoService : IMongoService
         {
                try
             {
-                BidLogs NewBid = new BidLogs(data.Id,data.CatalogId,data.BuyerEmail,data.BidValue,DateTime.UtcNow);
+                BidLogs NewBid = new BidLogs(data.CatalogId,data.BuyerEmail,data.BidValue,DateTime.UtcNow);
                 await _logs.InsertOneAsync(NewBid);
                 return NewBid;
             }

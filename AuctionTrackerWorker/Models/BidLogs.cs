@@ -18,9 +18,8 @@ namespace AuctionTrackerWorker.Models;
         public double BidValue {get;set;}
         [Newtonsoft.Json.JsonProperty("logTime")]
         public DateTime LogTime{get;set;}
-        public BidLogs(string id,string catalogid, string buyeremail, double bidvalue, DateTime logtime)
+        public BidLogs(string catalogid, string buyeremail, double bidvalue, DateTime logtime)
         {
-            this.Id =id;
             this.CatalogId = catalogid;
             this.BuyerEmail = buyeremail;
             this.BidValue = bidvalue;
