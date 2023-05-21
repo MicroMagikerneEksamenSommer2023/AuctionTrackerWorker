@@ -56,7 +56,7 @@ public class MongoService : IMongoService
 
         public async Task<Bid> UpdateBid(Bid newData)
         {
-            var filter = Builders<Bid>.Filter.Eq(b=> b.Id, newData.Id);
+            var filter = Builders<Bid>.Filter.Eq(b=> b.CatalogId, newData.CatalogId);
             var update = Builders<Bid>.Update.Set(b=>b.BuyerEmail,newData.BuyerEmail).Set(b=>b.BidValue,newData.BidValue);
             var dbData = await _bids.FindOneAndUpdateAsync(filter,update, new FindOneAndUpdateOptions<Bid>{ReturnDocument = ReturnDocument.After} );
             if(dbData == null)
