@@ -29,7 +29,9 @@ public class CRUDController : ControllerBase
         try
         {
             var dbService = _mongoServiceFactory.CreateScoped();
+            _logger.LogInformation("create scoped done");
             var response = await dbService.GetAllBids();
+            _logger.LogInformation("er ude af serice igen");
             return Ok(response);
         }
         catch (ItemsNotFoundException ex)

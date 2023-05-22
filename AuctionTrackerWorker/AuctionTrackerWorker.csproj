@@ -15,7 +15,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.1.4" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.2.3" />
-    <PackageReference Include="Nlog.Targets.Loki" Version="1.4.6" />
+    <PackageReference Include="NLog.Targets.Loki" Version="1.4.6" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.3" />
     <None Include="NLog.config">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
