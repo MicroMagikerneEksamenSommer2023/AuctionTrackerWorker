@@ -25,11 +25,15 @@ public class MongoService : IMongoService
         {
             var filter = Builders<Bid>.Filter.Empty;
             var dbData = (await _bids.FindAsync(filter)).ToList();
+            _logger.LogInformation("her været nede i db");
             if (dbData.Count == 0)
             {
+                _logger.LogInformation("fandt intet i db");
                 throw new ItemsNotFoundException("No bids were found in the database.");
             }
+            _logger.LogInformation("returnere noget fra service");
             return dbData;
+
         }
 
         public async Task<Bid> GetById(string id)
