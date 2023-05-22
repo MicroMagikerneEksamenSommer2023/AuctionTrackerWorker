@@ -5,7 +5,7 @@ using AuctionTrackerWorker.Services;
 namespace AuctionTrackerWorker.Controllers;
 
 [ApiController]
-[Route("bidservice/v1")]
+[Route("bidworker/v1")]
 public class CRUDController : ControllerBase
 {
 
