@@ -48,14 +48,12 @@ public class Worker : BackgroundService
             try
             {
                 var mongoService = _mongoServiceFactory.CreateScoped();
-                await mongoService.UpdateBid(newBid);
+                await mongoService.LogBid(newBid);
                 _logger.LogInformation("updated existing item");
             }
-            catch(ItemsNotFoundException)
+            catch(Exception ex)
             {
-                var mongoService = _mongoServiceFactory.CreateScoped();
-                await mongoService.CreateNewBid(newBid);
-                _logger.LogInformation("New item created");
+                _logger.LogInformation("kunne ikke logge bud");
             }
         };
         //basicConsume
