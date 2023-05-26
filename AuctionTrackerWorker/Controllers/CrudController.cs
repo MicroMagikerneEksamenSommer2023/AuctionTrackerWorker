@@ -64,7 +64,7 @@ public class CRUDController : ControllerBase
        
     }
 
-    [HttpGet("getlogsbycatalogid/{email}")]
+    [HttpGet("getlogsbyemail/{email}")]
     public async Task<IActionResult> GetAllLogsByEmail([FromRoute]string email)
     {
         
