@@ -8,23 +8,21 @@ namespace AuctionTrackerWorker.Controllers;
 [Route("bidworker/v1")]
 public class CRUDController : ControllerBase
 {
-
-
+    // Attributter
     private readonly ILogger<CRUDController> _logger;
-
     private readonly IMongoServiceFactory _mongoServiceFactory;
 
+    // Constructor
     public CRUDController(ILogger<CRUDController> logger, IMongoServiceFactory factory)
     {
         _logger = logger;
         _mongoServiceFactory = factory;
-       
     }
 
-     [HttpGet("getalllogs")]
+    // Henter alle budlogs fra databasen
+    [HttpGet("getalllogs")]
     public async Task<IActionResult> GetAllLogs()
     {
-        
         try
         {
             var dbService = _mongoServiceFactory.CreateScoped();
@@ -35,17 +33,17 @@ public class CRUDController : ControllerBase
         {
             return NotFound(new { error = ex.Message });
         }
-         catch (Exception ex)
+        catch (Exception ex)
         {
-            
+
             return StatusCode(500, new { error = "An unexpected error occurred." + ex.Message });
         }
-       
     }
-        [HttpGet("getlogsbycatalogid/{id}")]
-    public async Task<IActionResult> GetAllLogsById([FromRoute]string id)
+
+    // Henter en budlog fra databasen baseret på et catalog id
+    [HttpGet("getlogsbycatalogid/{id}")]
+    public async Task<IActionResult> GetAllLogsById([FromRoute] string id)
     {
-        
         try
         {
             var dbService = _mongoServiceFactory.CreateScoped();
@@ -56,18 +54,17 @@ public class CRUDController : ControllerBase
         {
             return NotFound(new { error = ex.Message });
         }
-         catch (Exception ex)
+        catch (Exception ex)
         {
-            
+
             return StatusCode(500, new { error = "An unexpected error occurred." + ex.Message });
         }
-       
     }
 
+    // Henter en budlog fra databasen baseret e-mail
     [HttpGet("getlogsbyemail/{email}")]
-    public async Task<IActionResult> GetAllLogsByEmail([FromRoute]string email)
+    public async Task<IActionResult> GetAllLogsByEmail([FromRoute] string email)
     {
-        
         try
         {
             var dbService = _mongoServiceFactory.CreateScoped();
@@ -78,12 +75,11 @@ public class CRUDController : ControllerBase
         {
             return NotFound(new { error = ex.Message });
         }
-         catch (Exception ex)
+        catch (Exception ex)
         {
-            
+
             return StatusCode(500, new { error = "An unexpected error occurred." + ex.Message });
         }
-       
     }
-    
+
 }
